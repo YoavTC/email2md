@@ -16,8 +16,8 @@ function extractEmail() {
 	if (!msg) return null;
 
 	const from = msg.querySelector('[email]')?.getAttribute('email') ?? '?';
-	const toEl = msg.querySelector('.g2');
-	const to = toEl?.getAttribute('email') ?? toEl?.innerText?.trim() ?? '?';
+	const recipients = [...msg.querySelectorAll('.g2')].map(el => el.getAttribute('email') ?? el.innerText.trim());
+	const to = [...new Set(recipients)].join(', ') || '?';
 	const dateRaw = msg.querySelector('.g3')?.getAttribute('title') ?? '?';
 	const body = msg.querySelector('.a3s')?.innerText?.trim().replace(/\n{3,}/g, '\n\n') ?? '';
 
